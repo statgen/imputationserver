@@ -1,17 +1,21 @@
 # API Reference
 
-The REST APIs provide programmatic ways to submit new jobs and to download data from Michigan Imputation Server. It identifies users using authentication tokens, responses are provided in JSON format.
-
+REST APIs provide programmatic ways to submit new jobs and to download data from both [Michigan Imputation Server](https://imputationserver.sph.umich.edu) and the [TOPMed Imputation Server](https://imputation.biodatacatalyst.nhlbi.nih.gov). It identifies users using authentication tokens, responses are provided in JSON format.
 
 ## Authentication
-Michigan Imputation Server uses a token-based authentication. The token is required for all future interaction with the server. The token can be created and downloaded from your user profile (username -> Profile):
+Both Michigan and TOPMed Imputation Server use a token-based authentication mechanism. The token is required for all future interaction with the server. The token can be created and downloaded from your user profile (username -> Profile):
 
 ![Activate API](https://raw.githubusercontent.com/genepi/imputationserver-docker/master/images/api.png)
 
-## Job Submission
-The API allows to set several imputation parameters.
+_**Note:** the tokens from Michigan Imputation Server and TOPMed Imputation Server are unique to each server_
 
-### POST /jobs/submit/minimac4
+## Job Submission
+The API allows setting several imputation parameters.
+
+### Michigan Imputation Server Job Submission
+
+URL: https://imputationserver.sph.umich.edu/api/v2
+POST /jobs/submit/minimac4
 
 The following parameters can be set:
 
@@ -24,6 +28,24 @@ The following parameters can be set:
 | input-refpanel     | apps@hapmap2, apps@phase1, apps@phase3, apps@hrc-r1.1 apps@caapa      | - |
 | input-phasing | eagle, hapiur, shapeit      |  eagle  |
 | input-population | eur, afr, asn, amr, sas, eas, AA, mixed      |  eur  |
+
+### TOPMed Imputation Server Job Submission
+
+URL: https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2
+POST /jobs/submit/imputationserver@1.2.7
+
+The following parameters can be set:
+
+| Parameter        | Values           | Default Value  |
+| ------------- |:-------------| :-----|
+| input-files      | /path/to/file |  |
+| input-mode | qconly, imputation     | imputation   |
+| input-password | user-defined password      |  auto  |
+| input-files-source | file-upload, sftp, http     |  default: file-upload  |
+| input-refpanel     | apps@topmed-r2@1.0.0     | - |
+| input-phasing | eagle      |  eagle  |
+| input-population | all, mixed      |  all  |
+
 
 ### Examples
 
@@ -41,6 +63,14 @@ curl -H "X-Auth-Token: <your-API-token>" -F "input-files=@/path-to-file" -F "inp
   "message":"Your job was successfully added to the job queue.",
   "success":true
 }
+```
+
+#### Submit a single file using TOPMed 
+
+To submit a job please change `/path-to-file` to the actual path.
+
+```sh
+curl -H "X-Auth-Token: <your-API-token>" -F "input-files=@/path-to-file" -F "input-refpanel=apps@topmed-r2@1.0.0" -F "input-phasing=eagle" https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2/jobs/submit/imputationserver@1.2.7
 ```
 
 #### Submit multiple files using 1000 Genomes Phase 3
