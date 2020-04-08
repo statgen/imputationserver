@@ -1,20 +1,21 @@
 # API Reference
 
-The REST APIs provide programmatic ways to submit new jobs and to download data from Michigan Imputation Server. It identifies users using authentication tokens, responses are provided in JSON format.
-
+REST APIs provide programmatic ways to submit new jobs and to download data from both [Michigan Imputation Server](https://imputationserver.sph.umich.edu) and the [TOPMed Imputation Server](https://imputation.biodatacatalyst.nhlbi.nih.gov). It identifies users using authentication tokens, responses are provided in JSON format.
 
 ## Authentication
-Michigan Imputation Server uses a token-based authentication. The token is required for all future interaction with the server. The token can be created and downloaded from your user profile (username -> Profile):
+Both Michigan and TOPMed Imputation Server use a token-based authentication mechanism. The token is required for all future interaction with the server. The token can be created and downloaded from your user profile (username -> Profile):
 
 ![Activate API](https://raw.githubusercontent.com/genepi/imputationserver-docker/master/images/api.png)
 
-For security reasons, Api Tokens are valid for 30 days. You can check the status in the web interface.
-
+_**Note:** the tokens from Michigan Imputation Server and TOPMed Imputation Server are unique to each server_
 
 ## Job Submission
-The API allows to submit imputation jobs and to set several parameters.
+The API allows setting several imputation parameters.
 
-### POST /jobs/submit/minimac4
+### Michigan Imputation Server Job Submission
+
+URL: https://imputationserver.sph.umich.edu/api/v2
+POST /jobs/submit/minimac4
 
 The following parameters can be set:
 
@@ -33,7 +34,25 @@ The following parameters can be set:
 
 ### Examples: curl
 
-#### Submit a single file
+### TOPMed Imputation Server Job Submission
+
+URL: https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2
+POST /jobs/submit/imputationserver@1.2.7
+
+The following parameters can be set:
+
+| Parameter        | Values           | Default Value  |
+| ------------- |:-------------| :-----|
+| input-files      | /path/to/file |  |
+| input-mode | qconly, imputation     | imputation   |
+| input-password | user-defined password      |  auto  |
+| input-files-source | file-upload, sftp, http     |  default: file-upload  |
+| input-refpanel     | apps@topmed-r2@1.0.0     | - |
+| input-phasing | eagle      |  eagle  |
+| input-population | all, mixed      |  all  |
+
+
+### Examples
 
 To submit a job please change `/path-to/file.vcf.gz` to a valid vcf file and update `TOKEN` with your API Token:
 
@@ -60,11 +79,15 @@ Response:
 }
 ```
 
-#### Submit multiple files
+#### Submit a single file using TOPMed 
 
-Submits multiple vcf files and impute against 1000 Genomes Phase 3 reference panel.
+To submit a job please change `/path-to-file` to the actual path.
 
-Command:
+```sh
+curl -H "X-Auth-Token: <your-API-token>" -F "input-files=@/path-to-file" -F "input-refpanel=apps@topmed-r2@1.0.0" -F "input-phasing=eagle" https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2/jobs/submit/imputationserver@1.2.7
+```
+
+#### Submit multiple files using 1000 Genomes Phase 3
 
 ```sh
 TOKEN="YOUR-API-TOKEN";
