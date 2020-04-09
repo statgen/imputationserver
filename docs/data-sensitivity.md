@@ -1,6 +1,6 @@
 # Data Security
 
-Since data is transfered to our server located in Michigan, a wide array of security measures are in force:
+For TOPMed Imputation, data is transfered to a secure server hosted on Amazon Web Servies, a wide array of security measures are in force:
 
 - The complete interaction with the server is secured with HTTPS.
 - Input data is deleted from our servers as soon it is not needed anymore.
