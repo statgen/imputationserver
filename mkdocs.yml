@@ -1,4 +1,4 @@
-site_name: Michigan Imputation Server
+site_name: TOPMed Imputation Server
 theme: readthedocs
 
 pages:
@@ -17,14 +17,14 @@ pages:
 
 
 
-repo_name: genepi/imputationserver
-repo_url: https://github.com/genepi/imputationserver
+repo_name: statgen/imputationserver
+repo_url: https://github.com/statgen/imputationserver
 edit_uri: edit/master/docs
 
 extra:
   social:
     - type: github-alt
-      link: https://github.com/genepi/imputationserver
+      link: https://github.com/statgen/imputationserver
     - type: twitter
       link: https://twitter.com/umimpute
 
