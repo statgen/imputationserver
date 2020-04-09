@@ -1,26 +1,34 @@
 # Getting started
 
-To use Michigan Imputation Server, a [registration](https://imputationserver.sph.umich.edu/index.html#!pages/register) is required.
+To use TOPMed Imputation Server, a [registration](https://imputation.biodatacatalyst.nhlbi.nih.gov/index.html#!pages/register) is required.
 We send an activation mail to the provided address. Please follow the instructions in the email to activate your account. If it doesn't arrive, ensure you have entered the correct email address and check your spam folder.
 
 **After the email address has been verified, the service can be used without any costs.**
 
-Please cite this paper if you use Michigan Imputation Server in your GWAS study:
+Please cite this paper if you use the Imputation Server in your GWAS study:
 
 > Das S, Forer L, Schönherr S, Sidore C, Locke AE, Kwong A, Vrieze S, Chew EY, Levy S, McGue M, Schlessinger D, Stambolian D, Loh PR, Iacono WG, Swaroop A, Scott LJ, Cucca F, Kronenberg F, Boehnke M, Abecasis GR, Fuchsberger C. [Next-generation genotype imputation service and methods](https://www.ncbi.nlm.nih.gov/pubmed/27571263). Nature Genetics 48, 1284–1287 (2016).
 
 
 ## Setup your first imputation job
 
-Please [login](https://imputationserver.sph.umich.edu/index.html#!pages/login) with your credentials and click on the **Run** tab to start a new imputation job. The submission dialog allows you to specify the properties of your imputation job.
+Please [login](https://imputation.biodatacatalyst.nhlbi.nih.gov/index.html#!pages/login) with your credentials and click on the **Run** tab to start a new imputation job. The submission dialog allows you to specify the properties of your imputation job.
 
 ![](images/submit-job01.png)
 
 The following options are available:
 
-### Reference Panel
+### Reference Panels
 
-Our server offers genotype imputation from different reference panels. The most accurate and largest panel is **HRC (Version r1.1 2016)**. Please select one that fulfills your needs and supports the population of your input data:
+#### TOPMed Imputation Server
+
+The TOPMed Imputation Server offers genotype imputation for the TOPMed reference panel, which is the largest and most accurate panel available amongst the two imputation servers.
+
+- TOPMed (Version r2 2020)
+
+#### Michigan Imputation Server
+
+The Michigan Imputation Server has several additional reference panels available.  Please select one that fulfills your needs and supports the population of your input data:
 
 - HRC (Version r1.1 2016)
 - HRC (Version r1 2015)
@@ -89,9 +97,9 @@ Please select the population of your uploaded samples. This information is used 
 
 |  Population | Supported Reference Panels |
 | ----------- | ---------------------------|
-| **AFR** | all |
-| **AMR** | all |
-| **EUR** | all |
+| **AFR** | all except TOPMed-r2 |
+| **AMR** | all except TOPMed-r2 |
+| **EUR** | all except TOPMed-r2 |
 | **Mixed** | all |
 | **AA** | CAAPA |
 | **ASN** | 1000 Genomes Phase 1 (Version 3) |
