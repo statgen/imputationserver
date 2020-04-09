@@ -2,8 +2,7 @@
 
 Our servers offers imputation from the following reference panels:
 
-
-## TOPMed (TOPMed-R2 on GRC38)
+## TOPMed (Version R2 on GRC38)
 
 The TOPMed panel consists of 194,512 haplotypes
 
