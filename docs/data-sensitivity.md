@@ -19,11 +19,11 @@ To upload and download data, users must register with a unique e-mail address an
 
 A wide array of security measures are in force on the imputation servers:
 
-- SSH login to the servers is restricted to only systems administrators.
-- Direct root login via SSH is not allowed from the public Internet.
-- The public-facing side of the servers sits behind the School of Public Health's Checkpoint virtual firewall instance where a default-deny policy is used on inbound traffic; only explicitly allowed TCP ports are passed.
-- The School of Public Health also makes use of NIDS technologies such as Snort and Peakflow on its network links for traffic analysis and threat detection.
-- On imputation server itself, updates are run regularly by systems administrators who follow several zero-day computer security announcement lists; the OSSEC HIDS is used for log analysis and anomaly detection; and Denyhosts is used to thwart brute-force SSH login attacks.
+-	All stored data is encrypted at rest using FIPS 140-2 validated cryptographic software as well as encrypted in transit.
+-	Access controls follow principles of least privilege. All administrative access is secured via two-factor authentication using roll-based access controls and temporary credentials.
+-	Network access is restricted and filtered via web application firewalls, network access control lists, and security groups. Public/private network segmentation also ensures only the services that need to be are exposed to the public internet. All internal traffic and requests are logged and scanned for malicious or unusual activity.
+-	Advanced DDOS protection is in place to assure consistent site availability.
+-	All administrative user activities, system activities, and network traffic is logged and scanned for anomalies and malicious activity. Findings are alerted to administrative users.
 
 
 ## What encryption of the data is used while the data are present?
