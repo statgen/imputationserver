@@ -17,11 +17,20 @@ notifications:
     on_failure: always
     secure: mhZVv8K83Q9nx10BAxm1WR8lpZYxFdeJMUyJvzlEq3xQP3nnsnlSyhDkRPVaemjkNT8eDRtFcm6L4rmv+3niQuO1fzjc+Jvvky9agr37oAkriW8a+uDNFstLi2tGF5JVzsDPHOKEv4tJdLNdThX8dWHgWADFb+awLHMGZ1amrxSbMR5xAxKE9Poy9H3Btq++Ox4KA2z4ByAeW7SyiGserLxSz30/hdGDFxsph/jP0rYsy+Bti6emBboGf0W/ej5iD6fynCV/IL5yqvQ3i5hs2ol40pM/M6lRs1bKS1FX6tbXN7QloMCqeBRXV83NLNEDAjn3GkWqMsYjGKzVjxuMumStCZeUDsvoh9CJn6umEW7qGbOmPn8lBLOgNkqbmUJNy6qljNh1/HbzWk7mFzJ57Ijh0oQTHjwvqHV0lv3Iykz5JYMQQltB1Q2xIG5S9+ibPEnNZd3xBBP+qU/G7bBsBjj2lOrbRXsqoazr2Vrtae2LgowOoHJq06hLu8lYdT7s7lSQGxHeUphsyWm6PLItnA2+dgQ/2zrhjo4I3fhi3UEl9+sH/Md4/GfIDNAzxspReuyDGKlPA6g7jCsEv6P1V8m8k15cBH9FQHCnRmhPsxdWHQ8MIweb9B8IqJrzDsW152q/HAoNz9uZndYCPyNM9YA9ktmbUJ9DEf67393HB7M=
 deploy:
-  provider: releases
-  draft: true
+- provider: releases
   api-key:
     secure: rW+m4s/QTepeTfYIf3iHORYXi5J9y2iHL6We7o4XrVibIEchg7o7xTInQ1VOAL03+5Om6qGX55vpXRpFiV5SraBdi9uYQvuDwJ2+U+rnYkdWLr7wqXWPmTlZMmfN8Nhpgd+WwnCYA624Ehep/G9PIYjvL/HQII7VvBkK/idpNhu4I1WBEkQ3zSyOaO8NHB6w2nuzdYOkRv9kQFldBKk7Y33oxgzyT0RJq7lmqkxg8LfiF1BGNGakxhlNdj4DjqiYZr0s/+8D2Ao+1PChXeJxGH0FlzHFPPchpxcrCp2gQxvEaMcwOlFw1/hPWX6V3M6GPU7I2X0/9FkQ5d4gfHf36o+FfQqEQIomMMfrtnI5fbVVfl8DpjTZCMSy7zeZLSvlV2JEt5SSk8zXQJP+0CgKAyqrRKJmJdo9JGdWDJbdfftM+lwBpL5epSNTFfqIFv66GHSiiFWzsE2qpzUfh3Ov9frfj+pO3Hr23Sxz+swC974ZMV4+wYJkla4wHQKod7wscAOxB8xyoJ3uSuhitWyrwiTteinvkm8yi3Gdrk/p+SOIp77DJQo12GkBByTqzV+gZKUiY1zA4E24BK9RgliOz5wJ5PG7+BCiA+/yM73if/xdWRfo0ZLxD/g2PqTjI29pH/+SR+dAG63SSsWNQKHkc4MMRAiNggLJcf4u7BjrkTQ=
   skip_cleanup: true
   file: target/imputationserver.zip
-#  on:
-#    tags: true
+  overwrite: true
+  on:
+    tags: true
+- provider: releases
+  api-key:
+    secure: rW+m4s/QTepeTfYIf3iHORYXi5J9y2iHL6We7o4XrVibIEchg7o7xTInQ1VOAL03+5Om6qGX55vpXRpFiV5SraBdi9uYQvuDwJ2+U+rnYkdWLr7wqXWPmTlZMmfN8Nhpgd+WwnCYA624Ehep/G9PIYjvL/HQII7VvBkK/idpNhu4I1WBEkQ3zSyOaO8NHB6w2nuzdYOkRv9kQFldBKk7Y33oxgzyT0RJq7lmqkxg8LfiF1BGNGakxhlNdj4DjqiYZr0s/+8D2Ao+1PChXeJxGH0FlzHFPPchpxcrCp2gQxvEaMcwOlFw1/hPWX6V3M6GPU7I2X0/9FkQ5d4gfHf36o+FfQqEQIomMMfrtnI5fbVVfl8DpjTZCMSy7zeZLSvlV2JEt5SSk8zXQJP+0CgKAyqrRKJmJdo9JGdWDJbdfftM+lwBpL5epSNTFfqIFv66GHSiiFWzsE2qpzUfh3Ov9frfj+pO3Hr23Sxz+swC974ZMV4+wYJkla4wHQKod7wscAOxB8xyoJ3uSuhitWyrwiTteinvkm8yi3Gdrk/p+SOIp77DJQo12GkBByTqzV+gZKUiY1zA4E24BK9RgliOz5wJ5PG7+BCiA+/yM73if/xdWRfo0ZLxD/g2PqTjI29pH/+SR+dAG63SSsWNQKHkc4MMRAiNggLJcf4u7BjrkTQ=
+  skip_cleanup: true
+  file: target/imputationserver.zip
+  overwrite: true
+  draft: true
+  on:
+    branch: travis-build
