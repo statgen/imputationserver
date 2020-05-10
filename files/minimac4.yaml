@@ -89,8 +89,8 @@ workflow:
        type: list
        value: eagle
        values:
-         eagle: Eagle v2.4 (phased output)
-         no_phasing: No phasing
+         eagle: Eagle v2.4 (unphased input)
+         no_phasing: No phasing (phased input)
   
      - id: population
        description: Population
