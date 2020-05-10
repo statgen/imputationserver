@@ -32,5 +32,6 @@ deploy:
   file: target/imputationserver.zip
   overwrite: true
   draft: true
+  tag_name: Draft
   on:
     branch: travis-build
