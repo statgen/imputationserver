@@ -22,5 +22,6 @@ deploy:
     secure: rW+m4s/QTepeTfYIf3iHORYXi5J9y2iHL6We7o4XrVibIEchg7o7xTInQ1VOAL03+5Om6qGX55vpXRpFiV5SraBdi9uYQvuDwJ2+U+rnYkdWLr7wqXWPmTlZMmfN8Nhpgd+WwnCYA624Ehep/G9PIYjvL/HQII7VvBkK/idpNhu4I1WBEkQ3zSyOaO8NHB6w2nuzdYOkRv9kQFldBKk7Y33oxgzyT0RJq7lmqkxg8LfiF1BGNGakxhlNdj4DjqiYZr0s/+8D2Ao+1PChXeJxGH0FlzHFPPchpxcrCp2gQxvEaMcwOlFw1/hPWX6V3M6GPU7I2X0/9FkQ5d4gfHf36o+FfQqEQIomMMfrtnI5fbVVfl8DpjTZCMSy7zeZLSvlV2JEt5SSk8zXQJP+0CgKAyqrRKJmJdo9JGdWDJbdfftM+lwBpL5epSNTFfqIFv66GHSiiFWzsE2qpzUfh3Ov9frfj+pO3Hr23Sxz+swC974ZMV4+wYJkla4wHQKod7wscAOxB8xyoJ3uSuhitWyrwiTteinvkm8yi3Gdrk/p+SOIp77DJQo12GkBByTqzV+gZKUiY1zA4E24BK9RgliOz5wJ5PG7+BCiA+/yM73if/xdWRfo0ZLxD/g2PqTjI29pH/+SR+dAG63SSsWNQKHkc4MMRAiNggLJcf4u7BjrkTQ=
   skip_cleanup: true
   file: target/imputationserver.zip
+  overwrite: true
   on:
     tags: true
