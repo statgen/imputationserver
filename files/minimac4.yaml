@@ -93,7 +93,7 @@ workflow:
          no_phasing: No phasing (phased input)
   
      - id: population
-       description: Population
+       description: QC Frequency Check
        type: list
        values:
           bind: refpanel
