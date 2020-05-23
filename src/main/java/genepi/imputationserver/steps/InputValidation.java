@@ -186,7 +186,7 @@ public class InputValidation extends WorkflowStep {
 					}
 
 					if (build.equals("hg19") && vcfFile.hasChrPrefix()) {
-						context.endTask("Your upload data contains chromosome '" + vcfFile.getRawChromosome()
+						context.g("Your upload data contains chromosome '" + vcfFile.getRawChromosome()
 								+ "'. This is not a valid hg19 encoding. Please ensure that your input data is build hg19 and chromosome is encoded as '"
 								+ vcfFile.getChromosome() + "'.", WorkflowContext.ERROR);
 						return false;
@@ -234,7 +234,7 @@ public class InputValidation extends WorkflowStep {
 			}
 
 			if ((double)noSnps/(double)chunks > (double)maxChunkSnps) {
-				context.endTask("Your upload data contains " + noSnps + " SNPs in " + chunks + "chunks.\n"
+				context.error("Your upload data contains " + noSnps + " SNPs in " + chunks + "chunks.\n"
 					+"Input genotypes are expect to come from array genotypes with no more than\n"
 					+ maxChunkSnps + "SNPs expected per chunk.");
 				return false;
