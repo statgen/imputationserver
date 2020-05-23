@@ -186,7 +186,7 @@ public class InputValidation extends WorkflowStep {
 					}
 
 					if (build.equals("hg19") && vcfFile.hasChrPrefix()) {
-						context.g("Your upload data contains chromosome '" + vcfFile.getRawChromosome()
+						context.endTask("Your upload data contains chromosome '" + vcfFile.getRawChromosome()
 								+ "'. This is not a valid hg19 encoding. Please ensure that your input data is build hg19 and chromosome is encoded as '"
 								+ vcfFile.getChromosome() + "'.", WorkflowContext.ERROR);
 						return false;
