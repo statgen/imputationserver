@@ -13,10 +13,10 @@ import genepi.hadoop.HdfsUtil;
 
 public class RefPanel {
 
-	public static final String STRAMD_FLIPS = "100";
-	public static final String SAMPLE_CALL_RATE = "0.5";
+	public static final String STRAND_FLIPS = "100";
+	public static final String SAMPLE_CALL_RATE = "0.9";
 	public static final String MIN_SNPS = "3";
-	public static final String OVERLAP = "0.5";
+	public static final String OVERLAP = "0.2";
 	public static final String CHR_X_MIXED_GENOTYPES = "0.1";
 
 	private String id;
