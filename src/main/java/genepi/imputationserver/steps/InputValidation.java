@@ -75,7 +75,7 @@ public class InputValidation extends WorkflowStep {
 		}
 
 		// Set max number of chunk Snp (used as average across chunks)
-		int maxChunkSnps = 3000;
+		int maxChunkSnps = 20000;
 		if (store.getString("chunk.snps.max") != null){
 			maxChunkSnps = Integer.parseInt(store.getString("chunk.snps.max"));
 		}
