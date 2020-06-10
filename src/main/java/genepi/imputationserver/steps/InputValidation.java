@@ -234,9 +234,9 @@ public class InputValidation extends WorkflowStep {
 			}
 
 			if ((double)noSnps/(double)chunks > (double)maxChunkSnps) {
-				context.error("Your upload data contains " + noSnps + " SNPs in " + chunks + "chunks.\n"
+				context.error("Your upload data contains " + noSnps + " SNPs in " + chunks + " chunks.\n"
 					+"Input genotypes are expect to come from array genotypes with no more than\n"
-					+ maxChunkSnps + "SNPs expected per chunk.");
+					+ maxChunkSnps + " SNPs expected per chunk.");
 				return false;
 			}
 
