@@ -1,20 +1,19 @@
 package genepi.imputationserver.util;
 
+import genepi.hadoop.HdfsUtil;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-
-import genepi.hadoop.HdfsUtil;
-
 public class RefPanel {
 
 	public static final String STRAND_FLIPS = "100";
-	public static final String SAMPLE_CALL_RATE = "0.9";
+	public static final String SAMPLE_CALL_RATE = "0.5";
 	public static final String MIN_SNPS = "3";
 	public static final String OVERLAP = "0.2";
 	public static final String CHR_X_MIXED_GENOTYPES = "0.1";

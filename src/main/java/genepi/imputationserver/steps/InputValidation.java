@@ -1,11 +1,5 @@
 package genepi.imputationserver.steps;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Vector;
-
 import cloudgene.sdk.internal.WorkflowContext;
 import cloudgene.sdk.internal.WorkflowStep;
 import genepi.hadoop.importer.IImporter;
@@ -18,6 +12,12 @@ import genepi.imputationserver.util.PgsPanel;
 import genepi.imputationserver.util.RefPanel;
 import genepi.imputationserver.util.RefPanelList;
 import genepi.io.FileUtil;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
 
 public class InputValidation extends WorkflowStep {
 
@@ -74,6 +74,12 @@ public class InputValidation extends WorkflowStep {
 		int maxSamples = 0;
 		if (store.getString("samples.max") != null) {
 			maxSamples = Integer.parseInt(store.getString("samples.max"));
+		}
+
+		// Set max number of chunk Snp (used as average across chunks)
+		int maxChunkSnps = 20000;
+		if (store.getString("chunk.snps.max") != null){
+			maxChunkSnps = Integer.parseInt(store.getString("chunk.snps.max"));
 		}
 
 		List<VcfFile> validVcfFiles = new Vector<VcfFile>();
