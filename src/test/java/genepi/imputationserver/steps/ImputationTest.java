@@ -1,20 +1,5 @@
 package genepi.imputationserver.steps;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import cloudgene.sdk.internal.WorkflowStep;
 import genepi.hadoop.HdfsUtil;
 import genepi.imputationserver.steps.vcf.VcfFile;
@@ -28,7 +13,19 @@ import genepi.riskscore.commands.ApplyScoreCommand;
 import genepi.riskscore.io.PGSCatalog;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import picocli.CommandLine;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+
+import static org.junit.Assert.*;
 
 public class ImputationTest {
 
@@ -459,6 +456,7 @@ public class ImputationTest {
 
 		// create workflow context and set scores
 		WorkflowTestContext context = buildContext(inputFolder, "hapmap2");
+		context.setOutput("outputScores", "cloudgene2-hdfs");
 
 		Map<String, Object> pgsPanel = new HashMap<String, Object>();
 		List<String> scores = new Vector<String>();
@@ -1196,7 +1194,6 @@ public class ImputationTest {
 		HdfsUtil.createDirectory(context.getHdfsTemp());
 
 		context.setOutput("outputimputation", "cloudgene-hdfs");
-		context.setOutput("outputScores", "cloudgene2-hdfs");
 
 		context.setOutput("hadooplogs", file.getAbsolutePath() + "/hadooplogs");
 		FileUtil.deleteDirectory(file.getAbsolutePath() + "/hadooplogs");

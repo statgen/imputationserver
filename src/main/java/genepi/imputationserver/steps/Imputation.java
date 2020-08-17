@@ -1,24 +1,19 @@
 package genepi.imputationserver.steps;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 import cloudgene.sdk.internal.WorkflowContext;
 import genepi.hadoop.HadoopJob;
 import genepi.hadoop.HdfsUtil;
 import genepi.hadoop.io.HdfsLineWriter;
 import genepi.imputationserver.steps.imputation.ImputationJob;
 import genepi.imputationserver.steps.vcf.VcfChunk;
-import genepi.imputationserver.util.ContextLog;
-import genepi.imputationserver.util.DefaultPreferenceStore;
-import genepi.imputationserver.util.ParallelHadoopJobStep;
-import genepi.imputationserver.util.PgsPanel;
-import genepi.imputationserver.util.RefPanel;
-import genepi.imputationserver.util.RefPanelList;
+import genepi.imputationserver.util.*;
 import genepi.io.FileUtil;
 import genepi.io.text.LineReader;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Imputation extends ParallelHadoopJobStep {
 
@@ -38,7 +33,7 @@ public class Imputation extends ParallelHadoopJobStep {
 
 	private boolean ok = false;
 
-	public static int THREADS = 25;
+	public static final int THREADS = 25;
 
 	public Imputation() {
 		super(THREADS);
@@ -219,7 +214,11 @@ public class Imputation extends ParallelHadoopJobStep {
 				job.setPhasingEngine(phasing);
 				job.setInput(result.filename);
 				job.setOutput(HdfsUtil.path(output, chr));
-				job.setOutputScores(outputScores);
+
+				if (outputScores != null) {
+					job.setOutputScores(outputScores);
+				}
+
 				if (pgsPanel != null) {
 					job.setScores(pgsPanel.getScores());
 				}
