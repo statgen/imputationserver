@@ -253,6 +253,7 @@ public class Imputation extends ParallelHadoopJobStep {
 			// canceled by user
 			if (isCanceled()) {
 				context.println("Canceled by user.");
+
 				updateProgress();
 
 				String text = updateMessage();
