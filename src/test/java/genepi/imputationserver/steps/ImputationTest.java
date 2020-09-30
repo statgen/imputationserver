@@ -459,6 +459,7 @@ public class ImputationTest {
 
 		// create workflow context and set scores
 		WorkflowTestContext context = buildContext(inputFolder, "hapmap2");
+		context.setOutput("outputScores", "cloudgene2-hdfs");
 
 		Map<String, Object> pgsPanel = new HashMap<String, Object>();
 		List<String> scores = new Vector<String>();
@@ -1196,7 +1197,6 @@ public class ImputationTest {
 		HdfsUtil.createDirectory(context.getHdfsTemp());
 
 		context.setOutput("outputimputation", "cloudgene-hdfs");
-		context.setOutput("outputScores", "cloudgene2-hdfs");
 
 		context.setOutput("hadooplogs", file.getAbsolutePath() + "/hadooplogs");
 		FileUtil.deleteDirectory(file.getAbsolutePath() + "/hadooplogs");

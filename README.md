@@ -21,14 +21,10 @@ Michigan Imputation Server consists of several parallelized pipeline steps:
 ## Documentation
 The documentation is available at http://topmedimpute.readthedocs.io.
 
-## Releases
-The release cycle is described [here](RELEASE.md).
-
 ## Citation
 Please cite this paper if you use Michigan Imputation Server:
 
 > Das S, Forer L, Schönherr S, Sidore C, Locke AE, Kwong A, Vrieze S, Chew EY, Levy S, McGue M, Schlessinger D, Stambolian D, Loh PR, Iacono WG, Swaroop A, Scott LJ, Cucca F, Kronenberg F, Boehnke M, Abecasis GR, Fuchsberger C. [Next-generation genotype imputation service and methods](https://www.ncbi.nlm.nih.gov/pubmed/27571263). Nature Genetics 48, 1284–1287 (2016).
-
 
 ## Contact
 
