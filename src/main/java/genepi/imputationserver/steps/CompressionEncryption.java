@@ -283,8 +283,12 @@ public class CompressionEncryption extends WorkflowStep {
 				ZipFile file = new ZipFile(new File(filePath), password.toCharArray());
 				file.addFiles(files, param);
 
+				context.log("Creating file checksum for " + filePath);
+				long checksumStart = System.currentTimeMillis();
 				String checksum = FileChecksum.HashFile(new File(filePath), FileChecksum.Algorithm.MD5);
 				writer.write(checksum + " " + fileName);
+				long checksumEnd = (System.currentTimeMillis() - checksumStart) / 1000;
+				context.log("File checksum for " + filePath + " created in " + checksumEnd + " seconds.");
 
 				// delete temp dir
 				FileUtil.deleteDirectory(temp);
