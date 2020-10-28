@@ -247,9 +247,9 @@ public class InputValidation extends WorkflowStep {
 			}
 			
 			// Check if more than one copy of a chromosome are uploaded
-			Set<String> uniqChromosomes = new HashSet<String>(chromosomes);
+			Set<String> uniqueChromosomes = new HashSet<String>(chromosomes);
 			
-			if(chromosomes.size() != uniqChromosomes.size()){
+			if(chromosomes.size() != uniqueChromosomes.size()){
 				context.error("Your upload data contains multiple copies of a single chromosome.\n"
 				+ "Input chromosomes: " + chromosomeString + ".\n" 
 				+ "Input jobs are expected to only have one file per chromosome.\n");
