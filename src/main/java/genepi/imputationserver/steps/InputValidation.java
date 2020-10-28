@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
+import java.util.Set;
+import java.util.HashSet;
 
 public class InputValidation extends WorkflowStep {
 
