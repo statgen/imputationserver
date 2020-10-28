@@ -454,6 +454,30 @@ public class InputValidationTest extends TestCase {
 		assertEquals(905, count);
 
 	}
+	
+	public void testDuplicatedChromosomes() throws IOException {
+
+		String configFolder = "test-data/configs/hapmap-chr20-hg38";
+		// input folder contains two files with chr20
+		String inputFolder = "test-data/data/chr20-duplicated-hg38";
+
+		// create workflow context
+		WorkflowTestContext context = buildContext(inputFolder, "hapmap2");
+
+		// create step instance
+		InputValidation inputValidation = new InputValidationMock(configFolder);
+
+		// run and test
+		boolean result = run(context, inputValidation);
+
+		// check if step is failed
+		assertEquals(false, result);
+
+		// check error message
+		assertTrue(context.hasInMemory(" upload data contains multiple copies of a single chromosome"));
+
+	}
+
 
 	class InputValidationMock extends InputValidation {
 
