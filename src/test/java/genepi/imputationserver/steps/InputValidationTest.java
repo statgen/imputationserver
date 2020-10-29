@@ -455,14 +455,16 @@ public class InputValidationTest extends TestCase {
 
 	}
 	
+	
+	
 	public void testDuplicatedChromosomes() throws IOException {
 
-		String configFolder = "test-data/configs/hapmap-chr20-hg38";
-		// input folder contains two files with chr20
-		String inputFolder = "test-data/data/chr20-duplicated-hg38";
-
+		String configFolder = "test-data/configs/hapmap-chr1";
+		//input folder has two files with same chromosome
+		String inputFolder = "test-data/data/duplicated_chrs";
 		// create workflow context
 		WorkflowTestContext context = buildContext(inputFolder, "hapmap2");
+		context.setInput("phasing", "eagle");
 
 		// create step instance
 		InputValidation inputValidation = new InputValidationMock(configFolder);
