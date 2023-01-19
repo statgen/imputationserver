@@ -58,7 +58,7 @@ Several tools are available:
  [BCFtools](https://samtools.github.io/bcftools) or [VcfCooker](http://genome.sph.umich.edu/wiki/VcfCooker).  
 
 ````sh
-plink --ped study_chr1.ped --map study_chr1.map --recode vcf --out study_chr1
+plink --ped study_chr1.ped --map study_chr1.map --export vcf-4.2 --recode vcf --out study_chr1
 ````
 
 Create a sorted vcf.gz file using [BCFtools](https://samtools.github.io/bcftools):
