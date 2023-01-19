@@ -5,6 +5,7 @@ Michigan Imputation Server accepts VCF files compressed with [bgzip](http://samt
 - Create a separate vcf.gz file for each chromosome.
 - Variations must be sorted by genomic position.
 - GRCh37 or GRCh38 coordinates are required.
+- VCF files need to be version 4.2 (or lower)
 
 !!! note
     Several \*.vcf.gz files can be uploaded at once.
