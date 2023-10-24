@@ -117,7 +117,6 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		String referenceName = parameters.get(ImputationJob.REF_PANEL);
 		imputationParameters.setPhasing(phasingEngine);
 		imputationParameters.setReferencePanelName(referenceName);
-		imputationParameters.setMinR2(minR2);
 		imputationParameters.setPhasingRequired(phasingRequired);
 
 		// get cached files
@@ -153,7 +152,7 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 			mapBeagleFilename = cache.getFile(mapBeagle);
 		}
 
-		String minimacCommand = cache.getFile("Minimac4");
+		String minimacCommand = cache.getFile("minimac4");
 		String eagleCommand = cache.getFile("eagle");
 		String beagleCommand = cache.getFile("beagle.jar");
 		String tabixCommand = cache.getFile("tabix");
@@ -226,6 +225,7 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		pipeline.setPhasingWindow(phasingWindow);
 		pipeline.setBuild(build);
 		pipeline.setMinimacWindow(window);
+		pipeline.setMinR2(minR2);
 
 	}
 
@@ -289,16 +289,8 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 				statistics.setImportTime((end - start) / 1000);
 
 			} else {
-				if (imputationParameters.getMinR2() > 0) {
-					// filter by r2
-					String filteredInfoFilename = outputChunk.getInfoFilename() + "_filtered";
-					filterInfoFileByR2(outputChunk.getInfoFilename(), filteredInfoFilename,
-							imputationParameters.getMinR2());
-					HdfsUtil.put(filteredInfoFilename, HdfsUtil.path(output, chunk + ".info"));
-
-				} else {
-					HdfsUtil.put(outputChunk.getInfoFilename(), HdfsUtil.path(output, chunk + ".info"));
-				}
+				
+				HdfsUtil.put(outputChunk.getInfoFilename(), HdfsUtil.path(output, chunk + ".info"));
 
 				long start = System.currentTimeMillis();
 

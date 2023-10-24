@@ -49,6 +49,8 @@ public class ImputationPipeline {
 	private int minimacWindow;
 
 	private int phasingWindow;
+	
+	private double minR2;
 
 	private String refFilename;
 
@@ -288,6 +290,16 @@ public class ImputationPipeline {
 	public boolean imputeVCF(VcfChunkOutput output)
 			throws InterruptedException, IOException, CompilationFailedException {
 
+		// create tabix index
+		Command tabix = new Command(tabixCommand);
+		tabix.setSilent(false);
+		tabix.setParams(output.getPhasedVcfFilename());
+		System.out.println("Command: " + tabix.getExecutedCommand());
+		if (tabix.execute() != 0) {
+			System.out.println("Error during index creation: " + tabix.getStdOut());
+			return false;
+		}
+
 		String chr = "";
 		if (build.equals("hg38")) {
 			chr = "chr" + output.getChromosome();
@@ -306,6 +318,7 @@ public class ImputationPipeline {
 		binding.put("chr", chr);
 		binding.put("unphased", false);
 		binding.put("mapMinimac", mapMinimac);
+		binding.put("minR2", minR2);
 
 		String[] params = createParams(minimacParams, binding);
 
@@ -472,6 +485,10 @@ public class ImputationPipeline {
 
 	public void setMapBeagleFilename(String mapBeagleFilename) {
 		this.mapBeagleFilename = mapBeagleFilename;
+	}
+
+	public void setMinR2(double minR2) {
+		this.minR2 = minR2;
 	}
 
 }
