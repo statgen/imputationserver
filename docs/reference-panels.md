@@ -8,8 +8,8 @@ The TOPMed panel consists of 194,512 haplotypes
 
 | ||
 | | |
-| Number of Samples | 97,256 |
-| Sites (chr1-22) |  308,107,085 |
+| Number of Samples | 133,597 |
+| Sites (chr1-22) |  445,600,184 |
 | Chromosomes | 1-22, X|
 | Imputation Server: | [https://imputation.biodatacatalyst.nhlbi.nih.gov](https://imputation.biodatacatalyst.nhlbi.nih.gov) |
 | Website: | [https://www.nhlbiwgs.org/](https://www.nhlbiwgs.org/) |
