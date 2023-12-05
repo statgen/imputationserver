@@ -26,7 +26,7 @@ The following parameters can be set:
 | job-name      | (user specified)                                  |               |          |
 | files         | /path/to/file                                     |               | **x**    |
 | mode          | `qconly`<br> `phasing` <br> `imputation`          | `imputation`  | **x**    |
-| refpanel      | `apps@topmed-r2`                                  | -             | **x**    |
+| refpanel      | `apps@topmed-r3`                                  | -             | **x**    |
 | phasing       | `eagle`<br> `no_phasing`                          | `eagle`       |          |
 | build         | `hg19`<br> `hg38`                                 | `hg19`        |          |
 | r2Filter      | `0` <br> `0.001` <br> `0.1` <br> `0.2` <br> `0.3` | `0`           |          |
@@ -53,7 +53,7 @@ curl https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2/jobs/submit/imputat
   -F "job-name=Documentation example (1000G - chr1 and 2)" \
   -F "files=@/path-to/filename_chr1.vcf.gz" \
   -F "files=@/path-to/filename_chr2.vcf.gz" \
-  -F "refpanel=apps@topmed-r2" \
+  -F "refpanel=apps@topmed-r3" \
   -F "build=hg38" \
   -F "phasing=eagle" \
   -F "population=all" \
@@ -76,19 +76,17 @@ Response:
 #### Submit one or more vcf files
 
 ```python3
-import json
-
 import requests
 
 # imputation server url
 base = 'https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2'
-token = 'YOUR-API-TOKEN';
+token = 'YOUR-API-TOKEN'
 
 # add token to header (see documentation for Authentication)
 headers = {'X-Auth-Token' : token }
 data = {
   'job-name': 'Documentation example (1000G - chr1 and 2)',
-  'refpanel': 'apps@topmed-r2',
+  'refpanel': 'apps@topmed-r3',
   'population': 'all',
   'build': 'hg38',
   'phasing': 'eagle',
@@ -97,8 +95,8 @@ data = {
 }
 
 # submit new job. This demonstrates multiple files, one per chromosome. Edit to send one or more chromosomes, as needed.
-vcf1 = '/path/to/filename_chr1.vcf.gz';
-vcf2 = '/path/to/filename_chr2.vcf.gz';
+vcf1 = '/path/to/filename_chr1.vcf.gz'
+vcf2 = '/path/to/filename_chr2.vcf.gz'
 
 with open(vcf1, 'rb') as f1, open(vcf2, 'rb') as f2:
     files = [
@@ -148,7 +146,7 @@ Response:
   "data": [
     {
       "app": null,
-      "application": "Genotype Imputation (Minimac4) 1.7.3",
+      "application": "Genotype Imputation (Minimac4) 1.8.0",
       "canceld": false,
       "complete": true,
       "currentTime": 1687898833855,
@@ -175,13 +173,11 @@ Response:
 ### Example: Python
 
 ```python
-import json
-
 import requests
 
 # imputation server url
 url = 'https://imputation.biodatacatalyst.nhlbi.nih.gov/api/v2'
-token = 'YOUR-API-TOKEN';
+token = 'YOUR-API-TOKEN'
 
 # add token to header (see authentication)
 headers = {'X-Auth-Token' : token }
@@ -219,7 +215,7 @@ Response:
 ```json
 {
   "app": null,
-  "application": "Genotype Imputation (Minimac4) 1.7.3",
+  "application": "Genotype Imputation (Minimac4) 1.8.0",
   "applicationId": "imputationserver",
   "canceld": false,
   "complete": true,
