@@ -4,7 +4,7 @@ Our server offers imputation from the following reference panels:
 
 ## TOPMed (Version R3 on GRC38)
 
-
+| ||
 | | |
 | Number of Samples | 133,597 |
 | Sites (chr1-22) |  445,600,184 |
