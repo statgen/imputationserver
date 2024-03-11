@@ -15,6 +15,9 @@ The Imputation Server is meant to fill in the gaps between sites on a genotyping
 
 If you have WGS at 50x, then you would get little to no benefit from imputing on the server.
 
+## How many jobs can I submit at once?
+There is a limit of three concurrent jobs per person. The TOPMed imputation server is a free resource, and these limits allow us to provide service to a wide audience. Please do not attempt to bypass these limits by creating multiple accounts. We monitor usage, and reserve the right to terminate jobs or accounts that are in violation of the policy.
+
 ## Unzip command is not working
 Please check the following points: (1) When selecting AES256 encryption, please use [7z](https://www.7-zip.org/download.html) to unzip your files (Debian: `sudo apt-get install p7zip-full`). For the default encryption option, all common `.zip` decompression programs should work. (2) If your password includes special characters (e.g. \\), please put single or double quotes around the password when extracting it from the command line (e.g. `7z x -p"PASSWORD" chr_22.zip`).
 

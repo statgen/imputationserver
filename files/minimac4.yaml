@@ -1,6 +1,6 @@
 id: imputationserver
 name: Genotype Imputation (Minimac4)
-description: This is the new Imputation Server Pipeline using <a href="https://github.com/statgen/Minimac4">Minimac4</a>. Documentation can be found <a href="https://topmedimpute.readthedocs.io/en/latest/">here</a>.<br><br>If your input data is <b>GRCh37/hg19</b> please ensure chromosomes are encoded without prefix  (e.g. <b>20</b>).<br>If your input data is <b>GRCh38/hg38</b> please ensure chromosomes are encoded with prefix 'chr' (e.g. <b>chr20</b>).
+description: This is the new Imputation Server Pipeline using <a href="https://github.com/statgen/Minimac4">Minimac4</a>. Documentation can be found <a href="https://topmedimpute.readthedocs.io/en/latest/">here</a>.<br><br>If your input data is <b>GRCh37/hg19</b> please ensure chromosomes are encoded without prefix  (e.g. <b>20</b>).<br>If your input data is <b>GRCh38/hg38</b> please ensure chromosomes are encoded with prefix 'chr' (e.g. <b>chr20</b>). <br><br>There is a limit of three concurrent jobs per person. The TOPMed imputation server is a free resource, and these limits allow us to provide service to a wide audience. We reserve the right to terminate users who violate this policy.
 version: 1.8.0-beta4
 website: https://topmedimpute.readthedocs.io/en/latest/
 category:
