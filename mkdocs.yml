@@ -9,9 +9,9 @@ nav:
 - Pipeline Overview: pipeline.md
 - Security: data-sensitivity.md
 - FAQ: faq.md
+- Contact: contact.md
 - Developer Documentation:
   - API: api.md
-- Contact: contact.md
 - Workshops:
   - ASHG2022:
     - Overview: workshops/ASHG2022.md
