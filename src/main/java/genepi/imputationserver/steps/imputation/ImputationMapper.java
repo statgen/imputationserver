@@ -33,7 +33,9 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 	private String outputScores;
 
-	private String[] scores;
+	private String scores;
+
+	private String includeScoresFilename = null;
 
 	private String refFilename = "";
 
@@ -117,7 +119,6 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		String referenceName = parameters.get(ImputationJob.REF_PANEL);
 		imputationParameters.setPhasing(phasingEngine);
 		imputationParameters.setReferencePanelName(referenceName);
-		imputationParameters.setMinR2(minR2);
 		imputationParameters.setPhasingRequired(phasingRequired);
 
 		// get cached files
@@ -153,11 +154,11 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 			mapBeagleFilename = cache.getFile(mapBeagle);
 		}
 
-		String minimacCommand = cache.getFile("Minimac4");
+		String minimacCommand = cache.getFile("minimac4");
 		String eagleCommand = cache.getFile("eagle");
 		String beagleCommand = cache.getFile("beagle.jar");
 		String tabixCommand = cache.getFile("tabix");
-		
+
 		// create temp directory
 		DefaultPreferenceStore store = new DefaultPreferenceStore(context.getConfiguration());
 		folder = store.getString("minimac.tmp");
@@ -169,28 +170,35 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		}
 
 		// scores
-		String scoresFilenames = parameters.get(ImputationJob.SCORES);
-		if (scoresFilenames != null) {
-			String[] filenames = scoresFilenames.split(",");
-			scores = new String[filenames.length];
-			for (int i = 0; i < scores.length; i++) {
-				String filename = filenames[i];
-				String name = FileUtil.getFilename(filename);
-				String localFilename = cache.getFile(name);
-				scores[i] = localFilename;
-				// check if score file has format file
-				String formatFile = cache.getFile(name + ".format");
-				if (formatFile != null) {
-					// create symbolic link to format file. they have to be in the same folder
-					Files.createSymbolicLink(Paths.get(FileUtil.path(folder,name)), Paths.get(localFilename));
-					Files.createSymbolicLink(Paths.get(FileUtil.path(folder,name+".format")), Paths.get(formatFile));
-					scores[i] = FileUtil.path(folder,name);
-				}
+		String scoresFilename = parameters.get(ImputationJob.SCORE_FILE);
+		if (scoresFilename != null) {
+			String name = FileUtil.getFilename(scoresFilename);
+			String localFilename = cache.getFile(name);
+			scores = localFilename;
+			// check if score file has info and tbi file
+			String infoFile = cache.getFile(name + ".info");
+			String tbiFile = cache.getFile(name + ".tbi");
+			if (infoFile != null && tbiFile != null) {
+				// create symbolic link to format file. they have to be in the same folder
+				Files.createSymbolicLink(Paths.get(FileUtil.path(folder, name)), Paths.get(localFilename));
+				Files.createSymbolicLink(Paths.get(FileUtil.path(folder, name + ".info")), Paths.get(infoFile));
+				Files.createSymbolicLink(Paths.get(FileUtil.path(folder, name + ".tbi")), Paths.get(tbiFile));
+				scores = FileUtil.path(folder, name);
+			} else {
+				throw new IOException("*info or *tbi file not available");
 			}
-			System.out.println("Loaded " + scores.length + " score files from distributed cache");
+			System.out.println("Loaded " + FileUtil.getFilename(scoresFilename) + " from distributed cache");
+
+			String hdfsIncludeScoresFilename = parameters.get(ImputationJob.INCLUDE_SCORE_FILE);
+			if (hdfsIncludeScoresFilename != null){
+				String includeScoresName = FileUtil.getFilename(hdfsIncludeScoresFilename);
+				includeScoresFilename = cache.getFile(includeScoresName);
+			}
+
+
 
 		} else {
-			System.out.println("No scores files et.");
+			System.out.println("No scores file set.");
 		}
 
 		// create symbolic link --> index file is in the same folder as data
@@ -212,6 +220,7 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		int phasingWindow = Integer.parseInt(store.getString("phasing.window"));
 
 		int window = Integer.parseInt(store.getString("minimac.window"));
+		int decay = Integer.parseInt(store.getString("minimac.decay"));
 
 		String minimacParams = store.getString("minimac.command");
 		String eagleParams = store.getString("eagle.command");
@@ -226,6 +235,8 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		pipeline.setPhasingWindow(phasingWindow);
 		pipeline.setBuild(build);
 		pipeline.setMinimacWindow(window);
+		pipeline.setMinR2(minR2);
+		pipeline.setDecay(decay);
 
 	}
 
@@ -262,6 +273,7 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 			pipeline.setPhasingEngine(phasingEngine);
 			pipeline.setPhasingOnly(phasingOnly);
 			pipeline.setScores(scores);
+			pipeline.setIncludeScoreFilename(includeScoresFilename);
 
 			boolean succesful = pipeline.execute(chunk, outputChunk);
 			ImputationStatistic statistics = pipeline.getStatistic();
@@ -288,17 +300,12 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 				statistics.setImportTime((end - start) / 1000);
 
-			} else {
-				if (imputationParameters.getMinR2() > 0) {
-					// filter by r2
-					String filteredInfoFilename = outputChunk.getInfoFilename() + "_filtered";
-					filterInfoFileByR2(outputChunk.getInfoFilename(), filteredInfoFilename,
-							imputationParameters.getMinR2());
-					HdfsUtil.put(filteredInfoFilename, HdfsUtil.path(output, chunk + ".info"));
+			}
 
-				} else {
-					HdfsUtil.put(outputChunk.getInfoFilename(), HdfsUtil.path(output, chunk + ".info"));
-				}
+			// push results only if not in PGS mode
+			else if (scores == null) {
+
+				HdfsUtil.put(outputChunk.getInfoFilename(), HdfsUtil.path(output, chunk + ".info"));
 
 				long start = System.currentTimeMillis();
 
@@ -328,9 +335,7 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 
 				System.out.println("Time filter and put: " + (end - start) + " ms");
 
-			}
-
-			if (scores != null) {
+			} else {
 
 				HdfsUtil.put(outputChunk.getScoreFilename(), HdfsUtil.path(outputScores, chunk + ".scores.txt"));
 				HdfsUtil.put(outputChunk.getScoreFilename() + ".json",
@@ -359,41 +364,4 @@ public class ImputationMapper extends Mapper<LongWritable, Text, Text, Text> {
 		}
 	}
 
-	public void filterInfoFileByR2(String input, String output, double minR2) throws IOException {
-
-		LineReader readerInfo = new LineReader(input);
-		LineWriter writerInfo = new LineWriter(output);
-
-		readerInfo.next();
-		String header = readerInfo.get();
-
-		// find index for Rsq
-		String[] headerTiles = header.split("\t");
-		int index = -1;
-		for (int i = 0; i < headerTiles.length; i++) {
-			if (headerTiles[i].equals("Rsq")) {
-				index = i;
-			}
-		}
-
-		writerInfo.write(header);
-
-		while (readerInfo.next()) {
-			String line = readerInfo.get();
-			String[] tiles = line.split("\t");
-			String value = tiles[index];
-			try {
-				double r2 = Double.parseDouble(value);
-				if (r2 > minR2) {
-					writerInfo.write(line);
-				}
-			} catch (NumberFormatException e) {
-				writerInfo.write(line);
-			}
-		}
-
-		readerInfo.close();
-		writerInfo.close();
-
-	}
 }

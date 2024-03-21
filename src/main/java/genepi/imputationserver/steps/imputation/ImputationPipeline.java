@@ -24,9 +24,9 @@ import lukfor.progress.tasks.Task;
 
 public class ImputationPipeline {
 
-	public static final String PIPELINE_VERSION = "michigan-imputationserver-1.7.4";
+	public static final String PIPELINE_VERSION = "michigan-imputationserver-2.0.0";
 
-	public static final String IMPUTATION_VERSION = "minimac4-1.0.2";
+	public static final String IMPUTATION_VERSION = "minimac-v4.1.6";
 
 	public static final String BEAGLE_VERSION = "beagle.18May20.d20.jar";
 
@@ -48,7 +48,11 @@ public class ImputationPipeline {
 
 	private int minimacWindow;
 
+	private int minimacDecay;
+
 	private int phasingWindow;
+
+	private double minR2;
 
 	private String refFilename;
 
@@ -62,13 +66,15 @@ public class ImputationPipeline {
 
 	private String mapBeagleFilename = "";
 
+	private String includeScoreFilename = null;
+
 	private String build = "hg19";
 
 	private boolean phasingOnly;
 
 	private String phasingEngine = "";
 
-	private String[] scores;
+	private String scores;
 
 	private ImputationStatistic statistic = new ImputationStatistic();
 
@@ -172,7 +178,7 @@ public class ImputationPipeline {
 			return false;
 		}
 
-		if (scores != null && scores.length >= 0) {
+		if (scores != null) {
 
 			System.out.println("  Starting PGS calculation '" + scores + "'...");
 
@@ -288,6 +294,16 @@ public class ImputationPipeline {
 	public boolean imputeVCF(VcfChunkOutput output)
 			throws InterruptedException, IOException, CompilationFailedException {
 
+		// create tabix index
+		Command tabix = new Command(tabixCommand);
+		tabix.setSilent(false);
+		tabix.setParams(output.getPhasedVcfFilename());
+		System.out.println("Command: " + tabix.getExecutedCommand());
+		if (tabix.execute() != 0) {
+			System.out.println("Error during index creation: " + tabix.getStdOut());
+			return false;
+		}
+
 		String chr = "";
 		if (build.equals("hg38")) {
 			chr = "chr" + output.getChromosome();
@@ -306,6 +322,8 @@ public class ImputationPipeline {
 		binding.put("chr", chr);
 		binding.put("unphased", false);
 		binding.put("mapMinimac", mapMinimac);
+		binding.put("minR2", minR2);
+		binding.put("decay", minimacDecay);
 
 		String[] params = createParams(minimacParams, binding);
 
@@ -330,7 +348,7 @@ public class ImputationPipeline {
 		String cacheDir = new File(output.getScoreFilename()).getParent();
 		PGSCatalog.CACHE_DIR = cacheDir;
 
-		if (scores == null || scores.length == 0) {
+		if (scores == null) {
 			System.out.println("PGS calcuation failed. No score files set. ");
 			return false;
 		}
@@ -344,25 +362,20 @@ public class ImputationPipeline {
 			ApplyScoreTask task = new ApplyScoreTask();
 			task.setVcfFilename(output.getImputedVcfFilename());
 			task.setChunk(scoreChunk);
-			task.setRiskScoreFilenames(scores);
-			
-			//TODO: enable fix-strand-flips
-			//task.setFixStrandFlips(true);
-			//task.setRemoveAmbiguous(true);
-			
-			for (String file : scores) {
-				String autoFormat = file + ".format";
-				if (new File(autoFormat).exists()) {
-					task.setRiskScoreFormat(file, RiskScoreFormat.MAPPING_FILE);
-				}
+			task.setRiskScoreFilenames(new String[] { scores });
+			if (includeScoreFilename != null && !includeScoreFilename.isEmpty()){
+				task.setIncludeScoreFilename(includeScoreFilename);
 			}
+
+			// TODO: enable fix-strand-flips
+			// task.setFixStrandFlips(true);
+			// task.setRemoveAmbiguous(true);
 
 			task.setOutputReportFilename(output.getScoreFilename() + ".json");
 			task.setOutput(output.getScoreFilename());
 
 			TaskService.setAnsiSupport(false);
 			List<Task> runningTasks = TaskService.run(task);
-
 			for (Task runningTask : runningTasks) {
 				if (!runningTask.getStatus().isSuccess()) {
 					System.out.println("PGS-Calc failed: " + runningTask.getStatus().getThrowable());
@@ -407,6 +420,10 @@ public class ImputationPipeline {
 		this.refBeagleFilename = refBeagleFilename;
 	}
 
+	public void setIncludeScoreFilename(String includeScoreFilename) {
+		this.includeScoreFilename = includeScoreFilename;
+	}
+
 	public void setMinimacCommand(String minimacCommand, String minimacParams) {
 		this.minimacCommand = minimacCommand;
 		this.minimacParams = minimacParams;
@@ -442,7 +459,7 @@ public class ImputationPipeline {
 		this.phasingOnly = phasingOnly;
 	}
 
-	public void setScores(String[] scores) {
+	public void setScores(String scores) {
 		this.scores = scores;
 	}
 
@@ -472,6 +489,15 @@ public class ImputationPipeline {
 
 	public void setMapBeagleFilename(String mapBeagleFilename) {
 		this.mapBeagleFilename = mapBeagleFilename;
+	}
+
+	public void setMinR2(double minR2) {
+		this.minR2 = minR2;
+	}
+
+	public void setDecay(int decay) {
+		this.minimacDecay = decay;
+
 	}
 
 }
