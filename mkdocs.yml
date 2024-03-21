@@ -11,6 +11,7 @@ nav:
 - FAQ: faq.md
 - Developer Documentation:
   - API: api.md
+- Contact: contact.md
 - Workshops:
   - ASHG2022:
     - Overview: workshops/ASHG2022.md
@@ -29,7 +30,6 @@ nav:
     - "Session 5: Imputation bot": workshops/ASHG2020/Session5.md
     - "Session 6: TOPMed Imputation Server": workshops/ASHG2020/Session6.md
     - "Session 7: Imputation panels": workshops/ASHG2020/Session7.md
-- Contact: contact.md
 
 
 
