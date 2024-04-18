@@ -536,7 +536,7 @@ public class FastQualityControlTest extends TestCase {
 
 		// check statistics
 		
-		assertTrue(context.hasInMemory("Excluded sites in total: 2,967"));
+		assertTrue(context.hasInMemory("Excluded sites in total: 121,176"));
 		assertTrue(context.hasInMemory("Allele switch: 118,209"));
 	}
 	
@@ -556,7 +556,7 @@ public class FastQualityControlTest extends TestCase {
 
 		// check statistics
 		
-		assertTrue(context.hasInMemory("Excluded sites in total: 2,967"));
+		assertTrue(context.hasInMemory("Excluded sites in total: 121,176"));
 		assertTrue(context.hasInMemory("Allele switch: 118,209"));
 		assertTrue(context.hasInMemory("<b>Error:</b> More than 33 allele switches have been detected. Imputation cannot be started!"));
 	}
