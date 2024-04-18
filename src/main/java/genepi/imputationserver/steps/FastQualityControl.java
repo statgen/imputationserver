@@ -338,7 +338,7 @@ public class FastQualityControl extends WorkflowStep {
 		}
 
 		// Check if too many allele switches are detected
-		else if (task.getAlleleSwitch() > alleleSwitches) {
+		else if ((task.getAlleleSwitch() + task.getStrandFlipAndAlleleSwitch()) > alleleSwitches) {
 			text.append("<br><b>Error:</b> More than " + alleleSwitches
 					+ " allele switches have been detected. Imputation cannot be started!");
 			context.error(text.toString());
