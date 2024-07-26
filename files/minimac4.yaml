@@ -132,6 +132,14 @@ workflow:
      - id: myseparator
        type: separator
 
+     # This note requested by partner institution (July 2024)
+     - id: dataretentionpolicy
+       description: "<i>NOTE: Submitted data is only used for imputation, and is deleted after job completion.</i>"
+       type: info
+
+     - id: myseparator2
+       type: separator
+
      - id: password
        description: Password set by user.
        value: auto
