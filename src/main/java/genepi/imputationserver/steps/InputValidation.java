@@ -289,6 +289,8 @@ public class InputValidation extends WorkflowStep {
 			context.incCounter("samples", noSamples);
 			context.incCounter("genotypes", noSamples * noSnps);
 			context.incCounter("chromosomes", noSamples * chromosomes.size());
+			context.incCounter("chunks", chunks);
+			context.incCounter("chunk_samples", chunks * noSamples);
 			context.incCounter("runs", 1);
 			context.incCounter("refpanel_" + reference, 1);
 			context.incCounter("phasing_" + "eagle", 1);
