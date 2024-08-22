@@ -287,10 +287,12 @@ public class InputValidation extends WorkflowStep {
 
 			// init counters
 			context.incCounter("samples", noSamples);
-			context.incCounter("genotypes", noSamples * noSnps);
-			context.incCounter("chromosomes", noSamples * chromosomes.size());
+			context.incCounter("genotypes", noSamples * noSnps);  // Legacy CG metric is convolution of two numbers
+			context.incCounter("just_genotypes", noSnps);
+			context.incCounter("chromosomes", noSamples * chromosomes.size()); // Legacy CG metric is convolution of two numbers
+			context.incCounter("just_chromosomes", chromosomes.size());
 			context.incCounter("chunks", chunks);
-			context.incCounter("chunk_samples", chunks * noSamples);
+			context.incCounter("chunk_samples", chunks * noSamples);  // Store calculation for convenience, since it's hard to query DB across rows
 			context.incCounter("runs", 1);
 			context.incCounter("refpanel_" + reference, 1);
 			context.incCounter("phasing_" + "eagle", 1);
