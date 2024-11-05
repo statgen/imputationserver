@@ -32,3 +32,6 @@ We provide wget command for all results. Please open the results tab. The last c
 
 ## Is this service secure?
 Due to small team size, it is difficult for us to complete detailed security questionnaires for every company or entity. However, as of May 2023, we have completed a rigorous external security review and received federal Authorization to Operate (ATO) from NHLBI/NIH. Please see our [security](/data-sensitivity) documentation for some common information, or [contact us](/contact) for specific questions. 
+
+## Why do my VCF 4.3 chromosome X phasing jobs keep failing?
+Your chromosome X phasing jobs are likely failing because the server doesn’t currently support VCF version 4.3. The server attempts to rewrite chromosome X due to the PAR/non-PAR split using the htsjdk library, which isn’t fully compatible with VCF 4.3, especially for chromosome X data. To resolve this issue, try changing the VCF header to version 4.2. The server supports this version and should allow your phasing jobs to complete successfully.
