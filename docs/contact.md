@@ -10,7 +10,7 @@ Please contact the [helpdesk](mailto:imputationserver@umich.edu) in case of othe
 * Please consult the [FAQ](https://topmedimpute.readthedocs.io/en/latest/faq/) first for answers to common questions
 * [Helpdesk](mailto:imputationserver@umich.edu) (**use this address for all inquiries**)
 * [Albert Smith](mailto:albertvs@umich.edu)
-* [Andrew Boughton](mailto:abought@umich.edu)
+* [Snehal Patil](mailto:snehal@umich.edu)
 * [Gonçalo Abecasis](mailto:goncalo@umich.edu)
 
 
