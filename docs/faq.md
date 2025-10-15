@@ -18,9 +18,11 @@ If you have WGS at 50x, then you would get little to no benefit from imputing on
 ## How many jobs can I submit at once?
 There is a limit of three concurrent jobs per person. The TOPMed imputation server is a free resource, and these limits allow us to provide service to a wide audience. Please do not attempt to bypass these limits by creating multiple accounts. We monitor usage, and reserve the right to terminate jobs or accounts that are in violation of the policy.
 
-## Unzip all files with a single command****
+## Unzip all files with a single command
 You can unzip all result files at once using the command below:
-ls *.zip | xargs -P <nprocs> -n 1 unzip -P '<password>'
+
+`ls *.zip | xargs -P <nprocs> -n 1 unzip -P '<password>'`
+
 -P <nprocs> specifies how many files to unzip in parallel (based on the number of CPU cores available).
 -n 1 ensures that each unzip command processes one file at a time.
 Replace <password> with the password provided for your result files. (Thanks to Charles-Alexandre for the suggestion)
