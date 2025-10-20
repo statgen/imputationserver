@@ -22,25 +22,26 @@ POST /jobs/submit/imputationserver
 The following parameters can be set:
 
 | Parameter     | Values                                            | Default Value | Required |
-|---------------|---------------------------------------------------|---------------|----------|
-| job-name      | (user specified)                                  |               |          |
-| files         | /path/to/file                                     |               | **x**    |
-| mode          | `qconly`<br> `phasing` <br> `imputation`          | `imputation`  | **x**    |
+| ------------- | ------------------------------------------------- | ------------- | -------- |
+| files         | /path/to/file                                     | -             | **x**    |
 | refpanel      | `apps@topmed-r3`                                  | -             | **x**    |
+| population    | `all` <br> `off`                                  | -             | **x**    |
+| mode          | `qconly`<br> `phasing` <br> `imputation`          | `imputation`  |          |
+| job-name      | (user specified)                                  | (job ID)      |          |
 | phasing       | `eagle`<br> `no_phasing`                          | `eagle`       |          |
 | build         | `hg19`<br> `hg38`                                 | `hg19`        |          |
 | r2Filter      | `0` <br> `0.001` <br> `0.1` <br> `0.2` <br> `0.3` | `0`           |          |
-| aesEncryption | `no`<br>`yes`                                     | `no`          |          |
-| meta          | `no`<br>`yes`                                     | `no`          |          |
+| aesEncryption | `no` <br> `yes`                                   | `no`          |          |
+| meta          | `no` <br> `yes`                                   | `no`          |          |
 
 * The _meta_ option generates a meta-imputation file.
-* AES 256 encryption is stronger than the default option, but `.zip` files using AES 256 cannot be opened with common decompression programs. If you select this option, you will need a tool such as [7-zip](https://www.7-zip.org/download.html) to open your results. 
+* AES 256 encryption is stronger than the default option, but `.zip` files using AES 256 cannot be opened with common decompression programs. If you select this option, you will need a tool such as [7-zip](https://www.7-zip.org/download.html) to open your results.
 
 ### Examples
 
 ### Examples: curl
 
-#### Submit file(s) using TOPMed 
+#### Submit file(s) using TOPMed
 
 To submit a job please change `/path-to-file` to the actual path. This example can be adapted to send one, or multiple, files. (one per chromosome)
 
@@ -103,7 +104,7 @@ with open(vcf1, 'rb') as f1, open(vcf2, 'rb') as f2:
         ('files', f1),
         ('files', f2)
     ]
-    
+
     endpoint = "/jobs/submit/imputationserver"
     resp = requests.post(base + endpoint, files=files, data=data, headers=headers)
 
