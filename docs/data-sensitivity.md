@@ -1,13 +1,15 @@
 # Data Security
 
-For TOPMed Imputation, data is transferred to a secure server hosted on Amazon Web Services. As of May 2023, we have completed a rigorous security review and received a federal Authorization to Operate (ATO) from NIH/NHLBI. A wide array of security measures are in force:
+The TOPMed Imputation Server, in coordination with NIH/NHLBI, protects the confidentiality, integrity, and availability of data in accordance with the NIST SP 800-53 Moderate baseline. This exceeds the NIST SP 800-171 compliance requirement of the NIH Genomic Data Sharing Policy (NOT-OD-24-157), as explained in the NIH's [FAQ](https://grants.nih.gov/faqs#/genomic-data-sharing-policy.htm?anchor=57430) on this topic. As of May 2023, we have completed a rigorous security review and received a federal Authorization to Operate (ATO) from NIH/NHLBI.
+
+All data is securely stored in a secure server hosted on Amazon Web Services (AWS). A wide array of security measures are in force:
 
 - All traffic to and from the server is secured with HTTPS.
 - Input data is deleted from our servers as soon it is not needed anymore.
 - We only store the number of samples and markers analyzed. We don't ever "look" at your data in any way.
 - All results are encrypted with a strong one-time password. We do not retain this password: only you can read the results.
 - After imputation is finished, the user has 7 days to download the results, after which they are automatically deleted.
-- The complete source code is available via public Github repositories: 
+- The complete source code is available via public Github repositories:
   - [Imputation pipeline](https://github.com/statgen/imputationserver/)
   - [Web application](https://github.com/statgen/cloudgene)
 
